@@ -21,7 +21,7 @@ int main() {
 	cudaMemcpy(hA, dA, size, cudaMemcpyDeviceToHost);
 
 	for(int i = 0; i < N; i++)
-		if (i == namespace-1)
+		if (i == N-1)
 			printf("%d", hA[i]);
 		else
 			printf("%d ", hA[i]);
