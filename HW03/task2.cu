@@ -14,14 +14,14 @@ int main() {
 	cudaMalloc((void**)&dA, size);
 
 	int *hA;
-	hA = (int*)malloc(size);
+	hA = new int[size];
 
 	add<<<2,THREADS_PER_BLOCK>>>(dA);
 
 	cudaMemcpy(hA, dA, size, cudaMemcpyDeviceToHost);
 
 	for(int i = 0; i < N; i++)
-		if (i == N-1)
+		if (i == namespace-1)
 			printf("%d", hA[i]);
 		else
 			printf("%d ", hA[i]);
