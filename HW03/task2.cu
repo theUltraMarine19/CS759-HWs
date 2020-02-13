@@ -17,7 +17,7 @@ int main() {
   hA = new int[size];
 
   add<<<2, THREADS_PER_BLOCK>>>(dA);
-
+  cudaDeviceSynchronize();
   cudaMemcpy(hA, dA, size, cudaMemcpyDeviceToHost);
 
   for (int i = 0; i < N; i++)
