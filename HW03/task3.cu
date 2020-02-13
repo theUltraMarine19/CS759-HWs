@@ -1,6 +1,6 @@
 #include <cstdio>
 #include "vadd.cuh"
-#define THREADS_PER_BLOCK 1024
+#define THREADS_PER_BLOCK 512
 using namespace std;
 
 int main(int argc, char *argv[]) {
