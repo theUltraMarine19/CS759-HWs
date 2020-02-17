@@ -1,3 +1,5 @@
+#include "matmul.cuh"
+
 __global__ void matmul_kernel(const float* A, const float* B, float* C, size_t n) {
 	int idx = threadIdx.x + blockIdx.x * blockDim.x;
 	if (idx < n*n) {
