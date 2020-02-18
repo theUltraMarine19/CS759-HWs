@@ -3,10 +3,16 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	int n = atoi(argv[1]);
+	long n = atol(argv[1]);
 	int R = atoi(argv[2]);
 	int tpb = atoi(argv[3]);
-
+	
+	// int dev;
+	// cudaDeviceProp prop;
+	// cudaGetDevice(&dev);
+	// cudaGetDeviceProperties(&prop, dev);
+	// cout << prop.sharedMemPerBlock << endl;
+	
 	cudaEvent_t start;
 	cudaEvent_t stop;
 	cudaEventCreate(&start);
@@ -17,7 +23,7 @@ int main(int argc, char* argv[]) {
 	out = new float[n];
 	mask = new float[2*R+1];
 
-	for (int i = 0; i < n; i++) {
+	for (long i = 0; i < n; i++) {
 		// img[i] = i;
 		img[i] = 1.0;
 		// out[i] = 0.0;
