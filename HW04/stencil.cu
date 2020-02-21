@@ -7,34 +7,41 @@ __global__ void stencil_kernel(const float* image, const float* mask, float* out
 	int bidx = blockIdx.x;
 	int block_size = blockDim.x;
 
-	
-
 	extern __shared__ float arr[];
-	float* img = &arr[0]; // block_size + 2*R 
+	float* img = &arr[0]; 									// block_size + 2*R 
 	float* msk = &arr[2*R + block_size]; 
-	float* out = &arr[block_size + 4*R + 1]; // block_size
+	float* out = &arr[block_size + 4*R + 1]; 				// block_size
 
-	// if (tidx == 1 && bidx == 0)
-	// printf("Hello %d %d\n", bidx, tidx);
-
-	long idx = tidx + block_size * bidx;
+	long idx = tidx + (long)block_size * (long)bidx; 		// long since can be > 2^31 -1
 	int curr = tidx + R;
 
+	// if (tidx == block_size-1 || tidx == 0)
+	//  	printf("Hello %ld %d %d\n", idx+R, curr-R, curr+R);
 
-	img[curr] = image[idx];
+	if (idx < n)
+		img[curr] = image[idx];
+	else
+		img[curr] = 0;
 
 	if (tidx < 2*R+1)
 		msk[tidx] = mask[tidx];
 
 	if (tidx < R) {
+		
 		if (idx >= R)
 			img[curr-R] = image[idx-R];
 		else
 			img[curr-R] = 0;
-		if (idx + block_size < n)
-			img[curr + block_size] = image[idx + block_size];
+		
+	}
+
+	if (tidx + R >= block_size) {
+
+		if (idx+R < n) 
+			img[curr+R] = image[idx + R];	
 		else
-			img[curr + block_size] = 0;
+			img[curr+R] = 0;
+		
 	}
 
 	__syncthreads();
@@ -52,12 +59,14 @@ __global__ void stencil_kernel(const float* image, const float* mask, float* out
 		// if (tidx == 1 && bidx == 0) {
 		// 	printf("%f %f %f \n", img[curr+i-R], msk[i], out[tidx]);
 		// }
+		// long img_idx = (long)curr+i;
 		out[tidx] += img[curr+i-R] * msk[i];
 	}
 
 	__syncthreads();
 
-	output[idx] = out[tidx];
+	if (idx < n)
+		output[idx] = out[tidx];
 
 }
 
