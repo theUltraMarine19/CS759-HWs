@@ -31,13 +31,13 @@ int main(int argc, char* argv[]) {
 
 	for (int i = 0; i < 2*R+1; i++) {
 		// mask[i] = i+1;
-		mask[i] = 0.0;
-		// mask[i] = 1.0;
+		// mask[i] = 0.0;
+		mask[i] = 1.0;
 	}
 
-	mask[R-1] = 1.0;
-	mask[R] = 1.0;
-	mask[R+1] = 1.0;
+	// mask[R-1] = 1.0;
+	// mask[R] = 1.0;
+	// mask[R+1] = 1.0;
 
 	float *dimg, *dout, *dmask;
 	cudaMallocManaged((void **)&dimg, n * sizeof(float));

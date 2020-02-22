@@ -72,7 +72,7 @@ __global__ void stencil_kernel(const float* image, const float* mask, float* out
 
 __host__ void stencil(const float* image, const float* mask, float* output, unsigned int n, unsigned int R, unsigned int threads_per_block) {
 
-	int num_blocks = (n+threads_per_block-1)/threads_per_block;
+	int num_blocks = ((long)n+(long)threads_per_block-1)/((long)threads_per_block);
 	stencil_kernel<<<num_blocks, threads_per_block, sizeof(float)*(threads_per_block + 2*R) + sizeof(float)*(2*R+1) + sizeof(float)*(threads_per_block)>>>(image, mask, output, n, R);
 	cudaDeviceSynchronize();
 
