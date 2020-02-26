@@ -23,8 +23,8 @@ int main(int argc, char* argv[]) {
   float ms;
   cudaEventElapsedTime(&ms, start, stop);
 
-  // for (int i = 0; i < n; i++)
-  // 	cout << out[i] << " ";
+  // for (int i = 0; i < N; i++)
+  //  	cout << out[i] << " ";
   // cout << endl;
   cout << res << endl;
   cout << ms << endl;

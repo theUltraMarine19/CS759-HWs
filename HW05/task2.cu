@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
   cudaMallocManaged(&C, n * n * sizeof(float));
 
   for (long i = 0; i < n * n; i++) {
-    // A[i] = i+1;
-    // B[i] = n*n-i;
+    // B[i] = (i+1)*0.1;
+    // A[i] = (n*n-i-1)*0.1;
     A[i] = 0.5;
     B[i] = 0.5;
     C[i] = -1.0;
@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
   cudaEventElapsedTime(&ms, start, stop);
 
   // for (int i = 0; i < n*n; i++)
-  // 	cout << C[i] << " ";
+  //  	cout << C[i] << " ";
   // cout << endl;
   cout << C[0] << endl;
   cout << C[n * n - 1] << endl;

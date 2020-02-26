@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 
   srand(time(NULL));
 
-  size_t n = 1024;
+  size_t n = 32768;
   double* A = new double[n * n];
   double* B = new double[n * n];
   double* C = new double[n * n];
@@ -102,6 +102,6 @@ int main(int argc, char* argv[]) {
   // for (size_t i = 0; i < n*n; i++)
   //   cout << C[i] << " ";
   // cout << endl;
-
+  
   return 0;
 }
