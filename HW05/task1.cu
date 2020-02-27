@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
   cout << res << endl;
   cout << ms << endl;
 
-  free(arr);
+  delete[] arr;
 
   return 0;
 }

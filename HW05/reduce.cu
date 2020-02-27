@@ -51,7 +51,7 @@ __host__ int reduce(const int* arr, unsigned int N,
   cudaFree(dout);
 
   int ret = tmp[0];
-  free(tmp);
+  delete[] tmp;
 
   // return tmp[0];
   return ret;
