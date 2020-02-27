@@ -29,17 +29,19 @@ __host__ int reduce(const int* arr, unsigned int N,
   cudaMalloc((void**)&darr, N * sizeof(int));
   cudaMalloc((void**)&dout, num_blocks * sizeof(int));
 
-  int* tmp = new int[num_blocks];
+  // int* tmp = new int[num_blocks];
+  int* tmp = new int[1];
   cudaMemcpy(darr, arr, N * sizeof(int), cudaMemcpyHostToDevice);
 
   while (num_blocks > 1) {
     reduce_kernel<<<num_blocks, threads_per_block,
                     sizeof(int) * threads_per_block>>>(darr, dout, N);
     cudaDeviceSynchronize();
-    cudaMemcpy(tmp, dout, num_blocks * sizeof(int), cudaMemcpyDeviceToHost);
+    // cudaMemcpy(tmp, dout, num_blocks * sizeof(int), cudaMemcpyDeviceToHost);
+    cudaMemcpy(darr, dout, num_blocks * sizeof(int), cudaMemcpyDeviceToDevice);
     N = num_blocks;
     num_blocks = (num_blocks + threads_per_block - 1) / threads_per_block;
-    cudaMemcpy(darr, tmp, N * sizeof(int), cudaMemcpyHostToDevice);
+    // cudaMemcpy(darr, tmp, N * sizeof(int), cudaMemcpyHostToDevice);
   }
 
   reduce_kernel<<<num_blocks, threads_per_block,
