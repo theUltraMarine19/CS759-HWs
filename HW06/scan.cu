@@ -84,8 +84,6 @@ __host__ void scan(const float* in, float* out, unsigned int n,
                                                            block_sums);
   cudaDeviceSynchronize();
 
-  // cudaMemcpy(out, dout, n * sizeof(float), cudaMemcpyDeviceToHost);
-
   // get the block increments (scan it once because of assumption)
   int new_num_blocks = (num_blocks + threads_per_block - 1) /
                        threads_per_block;  // will always be 1
@@ -106,4 +104,7 @@ __host__ void scan(const float* in, float* out, unsigned int n,
 
   cudaFree(din);
   cudaFree(dout);
+  cudaFree(block_sums);
+  cudaFree(block_incrs);
+  cudaFree(dummy);
 }

@@ -21,12 +21,14 @@ int main(int argc, char* argv[]) {
   cudaMallocManaged(&C, n * n * sizeof(float));
 
   // these are column-major
-  for (long i = 0; i < n * n; i++) {
+  for (long i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
     // B[i] = (i+1)*0.1;
     // A[i] = (n*n-i-1)*0.1;
-    A[i] = 0.5;
-    B[i] = 0.5;
-    C[i] = -1.0;
+      A[j*n+i] = i*n+j;
+      B[j*n+i] = (n-i-1)*n + (n-j-1);
+      C[j*n+i] = -1.0;
+    }
   }
 
   cudaEventRecord(start);
@@ -42,9 +44,10 @@ int main(int argc, char* argv[]) {
   float ms;
   cudaEventElapsedTime(&ms, start, stop);
 
-  // for (int i = 0; i < n*n; i++)
-  //  	cout << C[i] << " ";
-  // cout << endl;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+   	  cout << C[j*n+i] << " ";
+  cout << endl;
   cout << ms / n_tests << endl;
 
   cudaFree(A);
