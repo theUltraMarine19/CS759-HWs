@@ -16,7 +16,10 @@ int main(int argc, char* argv[]) {
   arr = new float[N];
   float* out;
   out = new float[N];
-  for (int i = 0; i < N; i++) arr[i] = 1;
+  for (int i = 0; i < N; i++) {
+	  arr[i] = 1;
+	  out[i] = 0;
+  }
 
   cudaEventRecord(start);
   scan(arr, out, N, tpb);
@@ -26,9 +29,9 @@ int main(int argc, char* argv[]) {
   float ms;
   cudaEventElapsedTime(&ms, start, stop);
 
-  // for (int i = 0; i < N; i++)
+  //for (int i = 0; i < N; i++)
   //  	cout << out[i] << " ";
-  // cout << endl;
+  //cout << endl;
 
   cout << out[N - 1] << endl;
   cout << ms << endl;
