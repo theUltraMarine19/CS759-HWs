@@ -2,12 +2,16 @@
 using namespace std;
 
 __global__ void adder(float* arr, float* block_incrs, int n) {
-  // int tid = threadIdx.x;
+  int tid = threadIdx.x;
+  extern __shared__ float sum[];
   int gtid = blockIdx.x * blockDim.x + threadIdx.x;
+  
+  if (tid == 0)
+  	sum[0] = block_incrs[blockIdx.x];
 
-  float add_val = block_incrs[blockIdx.x];
+  __syncthreads();
 
-  if (gtid < n) arr[gtid] += add_val;
+  if (gtid < n) arr[gtid] += sum[0];
 }
 
 __global__ void hillis_steele(float* g_idata, float* g_odata, int n,
@@ -97,7 +101,7 @@ __host__ void scan(const float* in, float* out, unsigned int n,
   // printf("\n");
 
   // add each block increment to each block
-  adder<<<num_blocks, threads_per_block>>>(dout, block_incrs, n);
+  adder<<<num_blocks, threads_per_block, sizeof(float)>>>(dout, block_incrs, n);
   cudaDeviceSynchronize();
 
   cudaMemcpy(out, dout, n * sizeof(float), cudaMemcpyDeviceToHost);
