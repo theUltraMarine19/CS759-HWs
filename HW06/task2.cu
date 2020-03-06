@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  int N = atoi(argv[1]);
+  long N = atol(argv[1]);
   // int tpb = atoi(argv[2]);
   int tpb = 1024;
 
@@ -16,9 +16,9 @@ int main(int argc, char* argv[]) {
   arr = new float[N];
   float* out;
   out = new float[N];
-  for (int i = 0; i < N; i++) {
-	  arr[i] = 1;
-	  out[i] = 0;
+  for (long i = 0; i < N; i++) {
+	  arr[i] = 1.0;
+	  out[i] = 0.0;
   }
 
   cudaEventRecord(start);

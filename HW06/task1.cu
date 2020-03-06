@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-  int n = atoi(argv[1]);
+  long n = atol(argv[1]);
   int n_tests = atoi(argv[2]);
 
   cudaEvent_t start;
@@ -24,11 +24,11 @@ int main(int argc, char* argv[]) {
 
   // these are column-major
   for (long i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
-      //A[j*n+i] = 1.0;
-      //B[j*n+i] = 1.0;
-      A[j*n+i] = i*n+j;
-      B[j*n+i] = (n-i-1)*n + (n-j-1);
+    for (long j = 0; j < n; j++) {
+      A[j*n+i] = 1.0;
+      B[j*n+i] = 1.0;
+      //A[j*n+i] = i*n+j;
+      //B[j*n+i] = (n-i-1)*n + (n-j-1);
       C[j*n+i] = -1.0;
     }
   }
@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
   for (int i = 0; i < n_tests; i++) {
     cublasSetMathMode(handle, CUBLAS_TENSOR_OP_MATH);
     for (long i = 0; i < n; i++) {
-      for (int j = 0; j < n; j++) {
+      for (long j = 0; j < n; j++) {
         C[j*n+i] = -1.0;
       }
     }
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
     float ms;
     cudaEventElapsedTime(&ms, start, stop);
     tot += ms;
-    // for (int i = 0; i < n; i++)
+    //for (int i = 0; i < n; i++)
     //  for (int j = 0; j < n; j++)
     //     cout << C[j*n+i] << " ";
     // cout << endl;  
