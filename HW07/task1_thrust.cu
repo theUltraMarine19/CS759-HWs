@@ -6,7 +6,7 @@
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-	int n = atoi(argv[1]);
+	long n = atol(argv[1]);
 
 	cudaEvent_t start;
   	cudaEvent_t stop;
@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   	cudaEventCreate(&stop);
 
 	thrust::host_vector<int> h_vec(n);
-	for (int i = 0; i < n; i++) {
+	for (long i = 0; i < n; i++) {
 		h_vec[i] = 1;
 	}
 

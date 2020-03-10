@@ -7,7 +7,7 @@ using namespace cub;
 CachingDeviceAllocator  g_allocator(true);  // Caching allocator for device memory
 
 int main(int argc, char *argv[]) {
-    int n = atoi(argv[1]);
+    long n = atol(argv[1]);
 
     cudaEvent_t start;
     cudaEvent_t stop;
@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     // Set up host arrays
     float* h_in;
     h_in = new float[n];
-    for (int i = 0; i < n; i++) {
+    for (long i = 0; i < n; i++) {
         h_in[i] = 1.0;
     }
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     cudaEventElapsedTime(&ms, start, stop);
     
     float* h_out;
-    h_out = new float   [n];
+    h_out = new float[n];
     CubDebugExit(cudaMemcpy(h_out, d_out, sizeof(float) * n, cudaMemcpyDeviceToHost));
     
     // Check for correctness
@@ -64,6 +64,9 @@ int main(int argc, char *argv[]) {
     if (d_in) CubDebugExit(g_allocator.DeviceFree(d_in));
     if (d_out) CubDebugExit(g_allocator.DeviceFree(d_out));
     if (d_temp_storage) CubDebugExit(g_allocator.DeviceFree(d_temp_storage));
+
+    delete[] h_in;
+    delete[] h_out;
     
     return 0;
 }
