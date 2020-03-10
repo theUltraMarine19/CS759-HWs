@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
     float* h_in;
     h_in = new float[n];
     for (long i = 0; i < n; i++) {
-        h_in[i] = 1.0;
+        h_in[i] = 1.1;
     }
 
     // Set up device arrays
@@ -32,17 +32,17 @@ int main(int argc, char *argv[]) {
     float* d_out = NULL;
     CubDebugExit(g_allocator.DeviceAllocate((void**)& d_out, sizeof(float) * n));
     
-    float init = 0.0;
+    // float init = 0.0;
 
     // Request and allocate temporary storage
     void* d_temp_storage = NULL;
     size_t temp_storage_bytes = 0;
-    CubDebugExit(DeviceScan::ExclusiveScan(d_temp_storage, temp_storage_bytes, d_in, d_out, Sum(), init, n));
+    CubDebugExit(DeviceScan::ExclusiveSum(d_temp_storage, temp_storage_bytes, d_in, d_out, n));
     CubDebugExit(g_allocator.DeviceAllocate(&d_temp_storage, temp_storage_bytes));
 
     // Do the actual reduce operation
     cudaEventRecord(start);
-    CubDebugExit(DeviceScan::ExclusiveScan(d_temp_storage, temp_storage_bytes, d_in, d_out, Sum(), init, n));
+    CubDebugExit(DeviceScan::ExclusiveSum(d_temp_storage, temp_storage_bytes, d_in, d_out, n));
     cudaEventRecord(stop);
     cudaEventSynchronize(stop);
 
