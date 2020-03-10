@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 		h_vec[i] = 1;
 	}
 
-	// int arr[] = {9,8,3,0,2,5,1,8,2,4,9,8,8,3,1};
+	// int arr[] = {1,2,3,4,9,8,3,0,2,5,1,8,2,4,9,8,8,3,1};
 	// h_vec = std::vector<int>(arr, arr+n);
 
 	// for (int i = 0; i < n; i++)
@@ -49,11 +49,11 @@ int main(int argc, char *argv[]) {
     // thrust::copy(d_cnts.begin(), d_cnts.end(), h_cnts.begin());
 
 	// for (size_t i = 0; i < h_vals.size(); i++)
-	// 	std::cout << h_vals[i] << " ";
+	//	std::cout << h_vals[i] << " ";
 	// std::cout << std::endl;
 
 	// for (size_t i = 0; i < h_cnts.size(); i++)
-	//  	std::cout << h_cnts[i] << " ";
+	// 	std::cout << h_cnts[i] << " ";
 	// std::cout << std::endl;    
 
     std::cout << h_vals.back() << std::endl;

@@ -25,6 +25,8 @@ int main(int argc, char *argv[]) {
     for (long i = 0; i < n; i++)
         sum += h_in[i];
 
+    // std::cout << sum << std::endl;
+
     // Set up device arrays
     int* d_in = NULL;
     CubDebugExit(g_allocator.DeviceAllocate((void**)& d_in, sizeof(int) * n));

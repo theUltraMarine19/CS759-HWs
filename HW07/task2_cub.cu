@@ -56,6 +56,11 @@ int main(int argc, char *argv[]) {
     // Check for correctness
     // printf("\t%s\n", (gpu_sum == sum ? "Test passed." : "Test falied."));
     // printf("\tSum is: %d\n", gpu_sum);
+    
+    //for (long i = 0; i < n; i++) {
+    //	    std::cout << h_out[i] << " ";
+    //}
+    //std::cout << std::endl;
 
     std::cout << h_out[n-1] << std::endl;
     std::cout << ms << std::endl;

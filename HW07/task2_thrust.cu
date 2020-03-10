@@ -32,6 +32,11 @@ int main(int argc, char *argv[]) {
     cudaEventElapsedTime(&ms, start, stop);
 
     thrust::copy(d_vec.begin(), d_vec.end(), h_vec.begin());
+    
+    //for (long i = 0; i < n; i++) {
+    //    std::cout << h_vec[i] << " ";
+    //}
+    //std::cout << std::endl;
 
     std::cout << h_vec[n-1] << std::endl;
     std::cout << ms << std::endl;
