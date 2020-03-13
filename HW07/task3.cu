@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 		h_vec[i] = 1;
 	}
 
-	// int arr[] = {1,2,3,4,9,8,3,0,2,5,1,8,2,4,9,8,8,3,1};
+	// int arr[] = {3,5,1,2,3,1};
 	// h_vec = std::vector<int>(arr, arr+n);
 
 	// for (int i = 0; i < n; i++)
