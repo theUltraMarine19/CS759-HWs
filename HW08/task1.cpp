@@ -18,16 +18,20 @@ int main(int argc, char* argv[]) {
   float *A, *B, *C;
   A = new float[n*n];
   B = new float[n*n];
+  // float *C;
   C = new float[n*n];
 
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
-      // A[i*n+j] = 1.0; // row-major
-      // B[j*n+i] = 1.0; // column-major
-      A[i*n+j] = i*n+j+1;
-      B[j*n+i] = (n-i-1)*n + (n-j-1);
+      A[i*n+j] = 1.0; // row-major
+      B[j*n+i] = 1.0; // column-major
+      // A[i*n+j] = i*n+j+1;
+      // B[j*n+i] = (n-i-1)*n + (n-j-1);
     }
   }
+
+  // float A[] = {1,2,3,4,5,6,7,8,9};
+  // float B[] = {1,4,7,2,5,8,3,6,9};
 
   omp_set_num_threads(t);
   start = chrono::high_resolution_clock::now();
@@ -36,10 +40,10 @@ int main(int argc, char* argv[]) {
 
   duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
 
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < n; j++)
-   	  cout << C[i*n+j] << " ";
-  cout << endl;
+  // for (int i = 0; i < n; i++)
+  //   for (int j = 0; j < n; j++)
+  //  	  cout << C[i*n+j] << " ";
+  // cout << endl;
   cout << C[0] << endl;
   cout << C[n*n-1] << endl;
   cout << duration_sec.count() << endl;

@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 #include <omp.h>
 using namespace std;
 
@@ -16,7 +17,10 @@ void ins_sort(int* arr, const size_t n) {
 	}
 }
 
-void msort(int* arr, const size_t n, const size_t threshold) {
+void merge_sort(int* arr, const size_t n, const size_t threshold) {
+	if (n == 0 || n == 1)
+		return;
+
 	if (n < threshold) {
 		ins_sort(arr, n);
 		return;
@@ -24,10 +28,10 @@ void msort(int* arr, const size_t n, const size_t threshold) {
 
 	// post these tasks and other threads will take care of them
 	#pragma omp task firstprivate(arr, n)
-	msort(arr, n/2, threshold);
+	merge_sort(arr, n/2, threshold);
 
 	#pragma omp task firstprivate(arr, n)
-	msort(arr+n/2, (n+1)/2, threshold);
+	merge_sort(arr+n/2, (n+1)/2, threshold);
 
 	#pragma omp taskwait
 	// wait for both the halves to be invidiually sorted
@@ -59,4 +63,14 @@ void msort(int* arr, const size_t n, const size_t threshold) {
 	}
 	memcpy(arr, temp, n*sizeof(int));
 	delete[] temp;
+}
+
+void msort(int* arr, const size_t n, const size_t threshold) {
+  #pragma omp parallel
+  {
+    // only one single thread should start the top-down approach of mergesort
+    // it will keep posting tasks which the other threads will execute
+    #pragma omp single nowait
+    merge_sort(arr, n, threshold);
+  } // implicit synchronization (nowait has no effect!)
 }

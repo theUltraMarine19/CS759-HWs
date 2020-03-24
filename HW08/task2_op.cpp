@@ -38,9 +38,19 @@ int main(int argc, char* argv[]) {
   chrono::high_resolution_clock::time_point end;
   chrono::duration<double, milli> duration_sec;
 
+  // char env[] = "OMP_PROC_BIND=spread";
+  // putenv(env);
+  // cout << getenv("OMP_PROC_BIND") << endl;
+  // system("export OMP_PROC_BIND=close");
   omp_set_num_threads(t);
   start = chrono::high_resolution_clock::now();
-  Convolve(image, output, n, mask, 3);
+  #pragma omp parallel proc_bind(close) 
+  {
+    #pragma omp master
+    cout << omp_get_proc_bind() << endl;
+    Convolve(image, output, n, mask, 3);
+  }
+
   end = chrono::high_resolution_clock::now();
 
   duration_sec = chrono::duration_cast<chrono::duration<double, milli>>(end - start);
