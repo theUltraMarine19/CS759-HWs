@@ -20,16 +20,22 @@ int main(int argc, char* argv[]) {
   float* image = new float[n * n];
   float* output = new float[n * n];
   float* mask = new float[3 * 3];
-
+  omp_set_num_threads(t);
+  
+  #pragma omp parallel for schedule(static)
   for (size_t i = 0; i < n * n; i++) {
     // image[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 50.0));
     image[i] = 1.0;
   }
 
-  for (size_t i = 0; i < 3 * 3; i++) {
+  #pragma omp parallel
+  {
+    for (size_t i = 0; i < 3 * 3; i++) {
     // mask[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 10.0));
     mask[i] = 1.0;
+    }  
   }
+  
 
   // float image[n*n] = {1, 3, 4, 8, 6, 5, 2, 4, 3, 4, 6, 8, 1, 4, 5, 2};
   // float mask[3*3] = {0, 0, 1, 0, 1, 0, 1, 0, 0};
@@ -42,7 +48,6 @@ int main(int argc, char* argv[]) {
   // putenv(env);
   // cout << getenv("OMP_PROC_BIND") << endl;
   // system("export OMP_PROC_BIND=close");
-  omp_set_num_threads(t);
   start = chrono::high_resolution_clock::now();
   #pragma omp parallel proc_bind(close) 
   {
