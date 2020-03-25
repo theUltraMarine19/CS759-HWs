@@ -32,7 +32,9 @@ int main(int argc, char* argv[]) {
   }
 
   // float image[n*n] = {1, 3, 4, 8, 6, 5, 2, 4, 3, 4, 6, 8, 1, 4, 5, 2};
+  // float image[n*n] = {1,2,3,4,5,6,7,8,9}; 
   // float mask[3*3] = {0, 0, 1, 0, 1, 0, 1, 0, 0};
+  // float mask[9] = {-1,-2,-1,0,0,0,1,2,1};
 
   chrono::high_resolution_clock::time_point start;
   chrono::high_resolution_clock::time_point end;

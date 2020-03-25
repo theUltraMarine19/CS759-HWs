@@ -1,9 +1,10 @@
 #include "convolution.h"
-#include <iostream>
 using namespace std;
 
 void Convolve(const float *image, float *output, size_t n, const float *mask, size_t m) {
-  #pragma omp parallel for collapse(2)
+  #pragma omp parallel for shared(image, mask, output, n, m)
+  // schedule(static) by default since balanced loops
+  // dropping collapse(2) since no improvement
   for (size_t x = 0; x < n; x++) {
     for (size_t y = 0; y < n; y++) {
       output[x * n + y] = 0;

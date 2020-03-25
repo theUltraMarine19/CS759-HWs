@@ -9,7 +9,7 @@
 #include "convolution.h"
 
 #include <cstdio>
-#include <sched.h>
+// #include <sched.h>
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -28,13 +28,13 @@ int main(int argc, char* argv[]) {
   omp_set_num_threads(t);
   
   // Have a fraction of image on both NUMA node 0 and 1. schedule(static) is anyway default
-  #pragma omp parallel for schedule(static)
+  #pragma omp parallel for
   for (size_t i = 0; i < n * n; i++) {
     // image[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 50.0));
     image[i] = 1.0;
   }
 
-  // Entire mask(36 bits) will get cached by resp threads in just one cross NUMA node access
+  // Entire mask (36 bits) will get cached by resp threads in just one cross NUMA node access
   for (size_t i = 0; i < 3 * 3; i++) {
     // mask[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 10.0));
     mask[i] = 1.0;
@@ -52,14 +52,15 @@ int main(int argc, char* argv[]) {
   // putenv(env);
   // cout << getenv("OMP_PROC_BIND") << endl;
 
-  #pragma omp parallel
-  {
-    int thread_num = omp_get_thread_num();
-    int cpu_num = sched_getcpu();
-    printf("Thread %3d is running on CPU %3d\n", thread_num, cpu_num);
-  }
+  // #pragma omp parallel
+  // {
+  //   int thread_num = omp_get_thread_num();
+  //   int cpu_num = sched_getcpu();
+  //   printf("Thread %3d is running on CPU %3d\n", thread_num, cpu_num);
+  // }
+
   start = chrono::high_resolution_clock::now();
-  cout << omp_get_proc_bind() << endl;
+  // cout << omp_get_proc_bind() << endl;
   Convolve(image, output, n, mask, 3);
   end = chrono::high_resolution_clock::now();
 
