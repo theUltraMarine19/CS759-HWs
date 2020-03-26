@@ -2,9 +2,9 @@
 #include <omp.h>
 
 void mmul(const float* A, const float* B, float* C, const std::size_t n) {
-	#pragma omp parallel for shared(A,B,C,n)
+	#pragma omp parallel for collapse(2)
 	// schedule(static) by default since balanced loops
-	// collapse 2 nested loops into one since no data dependency among iteration counts - NO IMPROVEMENT
+	// collapse 2 nested loops into one since no data dependency among iteration counts
 	// A, B, C are passed by reference so implicitly shared
 	for (std::size_t i = 0; i < n; i++) {
 		for (std::size_t j = 0; j < n; j++) {
