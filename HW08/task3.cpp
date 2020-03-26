@@ -17,16 +17,13 @@ int main(int argc, char* argv[]) {
   size_t n = atoi(argv[1]);
   int t = atoi(argv[2]);
   int ts = atoi(argv[3]);
-  
-  // srand(atoi(argv[4]));
+
   int* arr = new int[n];
   for (size_t i = 0; i < n; i++) {
     arr[i] = rand();
-    // cout << arr[i] << " ";
   }
-  // cout << endl;
 
-  // int arr[] = {9, 8, 3, 0, 2, 5, 1, 8, 2, 4};
+  // int arr[] = {6, 8, 3, 0, 2, 5, 1, 8, 2, 4, 9, 8, 8, 3, 1};
 
   chrono::high_resolution_clock::time_point start;
   chrono::high_resolution_clock::time_point end;
@@ -45,7 +42,7 @@ int main(int argc, char* argv[]) {
        
 
   // for (size_t i = 0; i < n; i++)
-  //    cout << arr[i] << " ";
+  //   cout << arr[i] << " ";
   // cout << endl;
 
   delete[] arr;
