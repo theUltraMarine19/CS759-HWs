@@ -34,12 +34,19 @@ int main(int argc, char* argv[]) {
     // float B[] = {1,9,3,7,2,3,0,1,6,1,4,8,2,5,5,5,6,0,4,6,7,4,8,3,7};
 
     omp_set_num_threads(t);
-    start = chrono::high_resolution_clock::now();
-    int ret = montecarlo(n, x, y, r);
-    end = chrono::high_resolution_clock::now();
+    int ret;
+    double time = 0.0;
 
-    duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
-
+    for (int iter = 0; iter < 13; iter++) {
+        
+        start = chrono::high_resolution_clock::now();
+        ret = montecarlo(n, x, y, r);
+        end = chrono::high_resolution_clock::now();
+        duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+        if (iter >= 3)
+            time += duration_sec.count();
+    }
+    
     // for (int i = 0; i < n; i++) {
     //     cout << x[i] << " ";
     // }
@@ -49,7 +56,7 @@ int main(int argc, char* argv[]) {
     // cout << endl;
 
     cout << (4*(float)ret)/(float)n << endl;
-    cout << duration_sec.count() << endl;
+    cout << time/10 << endl;
 
     delete[] x;
     delete[] y;

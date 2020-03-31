@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <climits>
 #include <algorithm>
-#include <ctime>
+
 #include <chrono>
 #include <ratio>
 
@@ -26,8 +26,7 @@ int main(int argc, char* argv[]) {
     // int *dists;
     // dists = new int[t*sharing]; // Each thread has entire cache line of 64 bytes to itself
     dists = new int[t];
-    
-    srand(time(NULL));
+
     for (int i = 0; i < n; i++) {
         arr[i] = rand() % (n+1);
     }
@@ -42,16 +41,25 @@ int main(int argc, char* argv[]) {
     //     dists[i] = 0;
     // }
 
-    for (int i = 0; i < t; i++) {
-        dists[i] = 0;
-    }
+    
 
     // int arr[] = {0, 1, 3, 4, 6, 6, 7, 8};
     // int centers[] = {2, 6};
 
-    start = chrono::high_resolution_clock::now();
-    cluster(n, t, arr, centers, dists);
-    end = chrono::high_resolution_clock::now();
+    double time = 0.0;
+
+    for (int iter = 0; iter < 13; iter++) {
+        
+        for (int i = 0; i < t; i++) {
+            dists[i] = 0;
+        }
+        start = chrono::high_resolution_clock::now();
+        cluster(n, t, arr, centers, dists);
+        end = chrono::high_resolution_clock::now();
+        duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+        if (iter >= 3)
+            time += duration_sec.count();
+    }
 
     int maxm = INT_MIN;
     int partition = -1; // No need to initialize though
@@ -77,7 +85,7 @@ int main(int argc, char* argv[]) {
     }
     
 
-    duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+    
 
     // for (int i = 0; i < t*sharing; i++)
     //  	  cout << dists[i] << " ";
@@ -97,7 +105,7 @@ int main(int argc, char* argv[]) {
 
     cout << maxm << endl;
     cout << partition << endl;
-    cout << duration_sec.count() << endl;
+    cout << time/10 << endl;
 
     delete[] arr;
     delete[] centers;
