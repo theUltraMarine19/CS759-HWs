@@ -52,9 +52,9 @@ int main(int argc, char* argv[]) {
 		double val;
 		MPI_Recv(&val, 1, MPI_DOUBLE, 1, 2, MPI_COMM_WORLD, &status);
 
-		// cout << duration_sec0.count() + val << endl;
+		cout << duration_sec0.count() + val << endl;
 
-		cout << "Rank 0 " << duration_sec0.count() << endl;
+		// cout << "Rank 0 " << duration_sec0.count() << endl;
 
 		// cout << "Rank=0" << endl;
 		// for (int i = 0; i < n; i++)
@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
 
 		MPI_Send(&val, 1, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
 
-		cout << "Rank 1 " << duration_sec0.count() << endl;
+		// cout << "Rank 1 " << duration_sec0.count() << endl;
 
 		// cout << "Rank=1" << endl;
 		// for (int i = 0; i < n; i++)
