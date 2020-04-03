@@ -28,18 +28,20 @@ int main(int argc, char* argv[]) {
 	msg1 = new float[n];
 	msg2 = new float[n];
 
-	
+	for (int i = 0; i < n; i++) {
+		msg1[i] = i;
+		msg2[i] = n-i;
+	}
+
+	double val;
 
 	MPI_Init(&argc, &argv);
 	MPI_Comm_rank(MPI_COMM_WORLD, &my_rank); // get the rank of the process
-	// MPI_Comm_size(MPI_COMM_WORLD, &p); // no. of processes = 2 (-np 2)
+	// MPI_Comm_size(MPI_COMM_WORLD, &p);    // no. of processes = 2 (-np 2)
+	// cout << p << endl;
 
 	if (my_rank == 0) {
-		
-		for (int i = 0; i < n; i++) {
-			msg1[i] = i;
-		}
-		
+				
 		// start timing t0
 		start0 = chrono::high_resolution_clock::now();
 		MPI_Send(msg1, n, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
@@ -49,11 +51,10 @@ int main(int argc, char* argv[]) {
 
 		duration_sec0 = chrono::duration_cast<chrono::duration<double, std::milli>>(end0 - start0);
 
-		double val;
 		MPI_Recv(&val, 1, MPI_DOUBLE, 1, 2, MPI_COMM_WORLD, &status);
 
 		cout << duration_sec0.count() + val << endl;
-
+		
 		// cout << "Rank 0 " << duration_sec0.count() << endl;
 
 		// cout << "Rank=0" << endl;
@@ -63,10 +64,6 @@ int main(int argc, char* argv[]) {
 	} 
 	else if (my_rank == 1) {
 
-		for (int i = 0; i < n; i++) {
-			msg2[i] = n-i;
-		}
-		
 		// start timing t1
 		start0 = chrono::high_resolution_clock::now();
 		MPI_Recv(msg1, n, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, &status);
