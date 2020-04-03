@@ -5,7 +5,7 @@ using namespace std;
 
 int montecarlo(const size_t n, const float *x, const float *y, const float radius) {
 	int count = 0;
-	#pragma omp parallel firstprivate(radius)
+	#pragma omp parallel
 	{ 
 		#pragma omp for simd reduction(+:count) 
 		for (size_t i = 0; i < n; i++) {

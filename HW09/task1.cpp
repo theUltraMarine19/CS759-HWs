@@ -39,9 +39,7 @@ int main(int argc, char* argv[]) {
 
     // for (int i = 0; i < sharing*t; i++) {
     //     dists[i] = 0;
-    // }
-
-    
+    // }    
 
     // int arr[] = {0, 1, 3, 4, 6, 6, 7, 8};
     // int centers[] = {2, 6};
@@ -62,7 +60,7 @@ int main(int argc, char* argv[]) {
     }
 
     int maxm = INT_MIN;
-    int partition = -1; // No need to initialize though
+    int partition = -1; // If multiple such threads, not necessarily the lowest thread index
     #pragma omp parallel num_threads(t)
     {
         int idx = -1;
@@ -93,6 +91,10 @@ int main(int argc, char* argv[]) {
 
     // for (int i = 0; i < n; i++)
     //        cout << arr[i] << " ";
+    // cout << endl;
+
+    // for (int i = 0; i < t; i++)
+    //        cout << centers[i] << " ";
     // cout << endl;
 
     // for (int i = 0; i < t; i++)

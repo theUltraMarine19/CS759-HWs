@@ -41,16 +41,17 @@ int main(int argc, char* argv[]) {
 	// cout << p << endl;
 
 	if (my_rank == 0) {
-				
+
 		// start timing t0
 		start0 = chrono::high_resolution_clock::now();
+		
 		MPI_Send(msg1, n, MPI_FLOAT, 1, 0, MPI_COMM_WORLD);
 		MPI_Recv(msg2, n, MPI_FLOAT, 1, 1, MPI_COMM_WORLD, &status);
+		
 		// end timing t0
 		end0 = chrono::high_resolution_clock::now();
 
 		duration_sec0 = chrono::duration_cast<chrono::duration<double, std::milli>>(end0 - start0);
-
 		MPI_Recv(&val, 1, MPI_DOUBLE, 1, 2, MPI_COMM_WORLD, &status);
 
 		cout << duration_sec0.count() + val << endl;
@@ -66,14 +67,15 @@ int main(int argc, char* argv[]) {
 
 		// start timing t1
 		start0 = chrono::high_resolution_clock::now();
+		
 		MPI_Recv(msg1, n, MPI_FLOAT, 0, 0, MPI_COMM_WORLD, &status);
 		MPI_Send(msg2, n, MPI_FLOAT, 0, 1, MPI_COMM_WORLD);
+		
 		// end timing t1
 		end0 = chrono::high_resolution_clock::now();
 
 		duration_sec0 = chrono::duration_cast<chrono::duration<double, std::milli>>(end0 - start0);
 		double val = duration_sec0.count();
-
 		MPI_Send(&val, 1, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
 
 		// cout << "Rank 1 " << duration_sec0.count() << endl;
