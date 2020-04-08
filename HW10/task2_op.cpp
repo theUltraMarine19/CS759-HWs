@@ -1,7 +1,6 @@
 #include <omp.h>
 #include <iostream>
 #include <cstdlib>
-#include "mpi.h"
 
 #include <chrono>
 #include <ratio>
@@ -24,14 +23,18 @@ int main(int argc, char* argv[]) {
         arr[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 10));
     }
 
+    for (int i = 0; i < 3; i++)
+        res = reduce(arr, 0, n);
+
     omp_set_num_threads(t);
     
     start = chrono::high_resolution_clock::now();
-    res = reduce(arr, 0, n);
+    for (int i = 0; i < 10; i++)
+        res = reduce(arr, 0, n);
     end = chrono::high_resolution_clock::now();
     duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);    
     cout << res << endl;
-    cout << duration_sec.count() << endl;
+    cout << duration_sec.count()/10.0 << endl;
     
     delete[] arr;
 
