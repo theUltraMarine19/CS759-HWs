@@ -35,17 +35,23 @@ int main(int argc, char* argv[]) {
     double time = 0.0;
     
     if (my_rank == 0) {
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             arr[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 10));
-            // arr[i] = 1.0;
+            // arr[i] = i;
+            // cout << arr[i] << " ";
+        }
+        // cout << endl;
         for (int i = 0; i < 3; i++)
             res = reduce(arr, 0, n);        
     }
 
     if (my_rank == 1) {
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             arr[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 10));
-            // arr[i] = 1.0;  
+            // arr[i] = n-i;
+            // cout << arr[i] << " ";  
+        }
+        // cout << endl;
         for (int i = 0; i < 3; i++)
             res = reduce(arr, 0, n);      
     }
@@ -60,6 +66,7 @@ int main(int argc, char* argv[]) {
         end = chrono::high_resolution_clock::now();
         duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
         time = duration_sec.count()/10.0;
+        // cout << "Rank 0 " << res << endl;
 
         start = chrono::high_resolution_clock::now();
         MPI_Reduce(&res, &global_res, 1, MPI_FLOAT, MPI_SUM, 0, MPI_COMM_WORLD);
@@ -71,6 +78,7 @@ int main(int argc, char* argv[]) {
     }
     else if (my_rank == 1) {
         res = reduce(arr, 0, n);
+        // cout << "Rank 1 " << res << endl; 
         MPI_Reduce(&res, &global_res, 1, MPI_FLOAT, MPI_SUM, 0, MPI_COMM_WORLD);
     }
     

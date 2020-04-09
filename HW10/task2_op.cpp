@@ -21,7 +21,10 @@ int main(int argc, char* argv[]) {
 
     for (int i = 0; i < n; i++) {
         arr[i] = static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / 10));
+        // arr[i] = i;
+        // cout << arr[i] << " ";
     }
+    // cout << endl;
 
     for (int i = 0; i < 3; i++)
         res = reduce(arr, 0, n);
