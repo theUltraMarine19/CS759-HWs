@@ -1,4 +1,3 @@
-#include <omp.h>
 #include <iostream>
 #include <cstdlib>
 
@@ -19,7 +18,7 @@ int main(int argc, char* argv[]) {
     v.data = new data_t[n];
 
     for (int i = 0; i < n; i++) {
-        v.data[i] = rand() % 14 + 1;
+        v.data[i] = rand() % 10 + 1;
     }
 
     data_t dest;
@@ -36,12 +35,72 @@ int main(int argc, char* argv[]) {
             time += duration_sec.count();
     }
 
-    // for (int i = 0; i < n; i++)
-    //        cout << v.data[i] << " ";
-    // cout << endl;    
+    cout << dest << endl;
+    cout << time/10 << endl;
+    dest = -1;
+    time = 0.0;
+
+    for (int iter = 0; iter < 13; iter++) {
+        
+        start = chrono::high_resolution_clock::now();
+        optimize2(&v, &dest);
+        end = chrono::high_resolution_clock::now();
+        duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+        if (iter >= 3)
+            time += duration_sec.count();
+    }
 
     cout << dest << endl;
     cout << time/10 << endl;
+    dest = -1;
+    time = 0.0;
+
+    for (int iter = 0; iter < 13; iter++) {
+        
+        start = chrono::high_resolution_clock::now();
+        optimize3(&v, &dest);
+        end = chrono::high_resolution_clock::now();
+        duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+        if (iter >= 3)
+            time += duration_sec.count();
+    }
+
+    cout << dest << endl;
+    cout << time/10 << endl;
+    dest = -1;
+    time = 0.0;
+
+    for (int iter = 0; iter < 13; iter++) {
+        
+        start = chrono::high_resolution_clock::now();
+        optimize4(&v, &dest);
+        end = chrono::high_resolution_clock::now();
+        duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+        if (iter >= 3)
+            time += duration_sec.count();
+    }
+
+    cout << dest << endl;
+    cout << time/10 << endl;
+    dest = -1;
+    time = 0.0;
+
+    for (int iter = 0; iter < 13; iter++) {
+        
+        start = chrono::high_resolution_clock::now();
+        optimize5(&v, &dest);
+        end = chrono::high_resolution_clock::now();
+        duration_sec = chrono::duration_cast<chrono::duration<double, std::milli>>(end - start);
+        if (iter >= 3)
+            time += duration_sec.count();
+    }
+
+    cout << dest << endl;
+    cout << time/10 << endl;
+
+    // for (int i = 0; i < n; i++)
+    //        cout << v.data[i] << " ";
+    // cout << endl;    
 
     delete[] v.data;
 

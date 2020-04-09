@@ -12,10 +12,10 @@
 // but your code should not depend on *any changes in this file* 
 // in order to compile. 
 
-#define OP *
-#define IDENT 1.f
+#define OP +
+#define IDENT 0
 
-typedef float data_t;
+typedef int data_t;
 
 typedef struct vec{
     size_t len;
